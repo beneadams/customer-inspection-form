@@ -122,7 +122,7 @@ form.add{position:relative;display:flex;margin:16px 0 0}form.add input{flex:1;mi
 .form-fields label{display:block;margin:18px 0;font-family:var(--sans, sans-serif);color:var(--ink,#222)}
 .form-fields input:not([type=checkbox]),.form-fields textarea{box-sizing:border-box;display:block;width:100%;margin-top:7px;padding:12px;border:1px solid var(--rule,#aaa);border-radius:6px;background:var(--card,#fff);color:var(--ink,#222);font:inherit;min-height:46px}
 .form-fields textarea{min-height:100px;resize:vertical}.form-fields .signature{font-family:var(--serif,serif);font-style:italic;font-size:24px}.form-fields .consent{display:flex;gap:10px;align-items:flex-start}.consent input{width:22px;height:22px;flex-shrink:0} .form-fields p{line-height:1.6}.notice{color:var(--muted,#666);font-size:14px}fieldset{border:0;padding:0;margin:0}legend{font-family:var(--serif,serif);font-size:24px;margin-top:24px} @media print{.instructions{display:none}.wrap{max-width:none}input,textarea{break-inside:avoid}.form-fields label{margin:10px 0}.form-fields p{font-size:11pt;line-height:1.35}}
-.signature-box{border:1px solid var(--rule,#aaa);border-radius:6px;background:#fff;overflow:hidden;break-inside:avoid}#signature-pad{display:block;width:100%;height:220px;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;cursor:crosshair}#signature-print{display:none;width:100%;height:220px;object-fit:contain}.form-fields .money{position:relative;display:block}.form-fields .money-sign{position:absolute;left:13px;top:50%;transform:translateY(calc(-50% + 3.5px));color:var(--ink,#222);font-weight:500;pointer-events:none}.form-fields #total-price{padding-left:28px;font-weight:500;font-variant-numeric:tabular-nums}.form-fields #purchase-date{background:color-mix(in srgb,var(--card,#fff),var(--ink,#222) 8%);color:var(--muted,#666);cursor:not-allowed;pointer-events:none;-webkit-user-select:none;user-select:none}.form-fields #form-reference,.form-fields #signed-time{font-family:var(--mono,monospace);letter-spacing:.04em;background:color-mix(in srgb,var(--card,#fff),var(--ink,#222) 5%);cursor:default} @media print{#signed-time::placeholder,#total-price::placeholder{color:transparent}#signature-pad{display:none!important}#signature-print{display:block!important}.signature-box{background:#fff!important}}
+.signature-box{border:1px solid var(--rule,#aaa);border-radius:6px;background:#fff;overflow:hidden;break-inside:avoid}#signature-pad{display:block;width:100%;height:220px;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;cursor:crosshair}#signature-print{display:none;width:100%;height:220px;object-fit:contain}.form-fields .money{position:relative;display:block}.form-fields .money-sign{position:absolute;left:13px;top:50%;transform:translateY(calc(-50% + 3.5px));color:var(--ink,#222);font-weight:500;pointer-events:none}.form-fields #total-price{padding-left:28px;font-weight:500;font-variant-numeric:tabular-nums}.form-fields #purchase-date,.form-fields #signed-date{background:#ebebeb;background:color-mix(in srgb,var(--card,#fff),var(--ink,#222) 8%);color:#666;color:var(--muted,#666);-webkit-text-fill-color:var(--muted,#666);opacity:1;cursor:not-allowed;pointer-events:none;-webkit-user-select:none;user-select:none}.form-fields #form-reference,.form-fields #signed-time{font-family:var(--mono,monospace);letter-spacing:.04em;background:color-mix(in srgb,var(--card,#fff),var(--ink,#222) 5%);cursor:default} @media print{#signed-time::placeholder,#total-price::placeholder{color:transparent}#signature-pad{display:none!important}#signature-print{display:block!important}.signature-box{background:#fff!important}}
 </style></head><body><div class="wrap">
 <h1>Customer inspection and final-sale acknowledgment</h1><p class="kicker">Magic Mouse Memories · Credit-card purchases only</p>
 <p class="lede">For credit-card purchases only: complete the details, provide a phone number or email address, and sign in the box with your pen or finger.</p>
@@ -130,7 +130,7 @@ form.add{position:relative;display:flex;margin:16px 0 0}form.add input{flex:1;mi
 <form class="form-fields" autocomplete="off">
 <fieldset><legend>Purchase details</legend>
 <label for="purchase-date">Purchase date<input id="purchase-date" type="text" readonly tabindex="-1" autocomplete="off" aria-describedby="purchase-date-note"></label>
-<p class="notice instructions" id="purchase-date-note">Filled in automatically with today’s date from this device and can’t be changed. Reset fills in the date again for the next customer.</p>
+<p class="notice instructions" id="purchase-date-note">Filled in automatically with today’s date from this device when the page opens, and can’t be changed. Reset fills it in again for the next customer.</p>
 <label for="form-reference">Form reference<input id="form-reference" type="text" readonly autocomplete="off" aria-describedby="reference-note"></label>
 <p class="notice" id="reference-note">Generated automatically for this form, with a new one after each reset. It is not a card or payment transaction number.</p>
 <label for="total-price">Total price (including tax)<span class="money"><span class="money-sign" aria-hidden="true">$</span><input id="total-price" type="text" inputmode="decimal" required autocomplete="off" placeholder="0.00" pattern="\s*\$?\s*([0-9]{1,3}(,[0-9]{3})+|[0-9]+)(\.[0-9]{1,2})?\s*" title="Enter an amount like 24.50" aria-describedby="total-note"></span></label>
@@ -152,19 +152,28 @@ form.add{position:relative;display:flex;margin:16px 0 0}form.add input{flex:1;mi
 <div class="signature-box"><canvas id="signature-pad" aria-labelledby="signature-label" aria-describedby="signature-help" role="img">Open this form in a browser with canvas support to draw your signature.</canvas><img id="signature-print" alt="Customer's handwritten signature"></div>
 <p class="notice instructions" id="signature-status" role="status" aria-live="polite">Not signed yet.</p>
 <button class="btn instructions" type="button" id="clear-signature">Clear Signature</button>
-<label for="signed-date">Date<input id="signed-date" type="date" required></label>
-<label for="signed-time">Time<input id="signed-time" type="text" readonly autocomplete="off" placeholder="Tap Insert current time" aria-describedby="time-note"></label>
-<button class="btn instructions" type="button" id="insert-time">Insert current time</button>
-<p class="notice instructions" id="time-note" role="status" aria-live="polite">Uses this device’s clock and time zone. The time stays as entered until you tap the button again; reset clears it.</p>
+<label for="signed-date">Date<input id="signed-date" type="text" readonly tabindex="-1" autocomplete="off" aria-describedby="signed-date-note"></label>
+<p class="notice instructions" id="signed-date-note">Same as the purchase date, filled in automatically. Nothing to type.</p>
+<label for="signed-time">Time<input id="signed-time" type="text" readonly autocomplete="off" placeholder="Tap Enter current time" aria-describedby="time-note"></label>
+<button class="btn instructions" type="button" id="insert-time">Enter current time</button>
+<p class="notice instructions" id="time-note" role="status" aria-live="polite">Filled in automatically from this device’s clock when the page opens and after reset. It stays fixed while the customer signs and you print; tap Enter current time to update it.</p>
 <label for="seller">Seller initials<input id="seller" type="text" autocomplete="off" required></label></fieldset>
 <p class="notice">Retain the completed PDF before resetting. Reset clears every entry and the drawn signature and cannot be undone.</p>
 <button class="btn instructions" type="button" id="print-form">Check form and print / save PDF</button>
 <button class="btn instructions" type="reset">Reset form for next customer</button>
-</form><div class="sources"><b>Source</b><p>Magic Mouse Memories customer inspection and final-sale acknowledgment supplied for this conversion. Original acknowledgment wording retained; handwritten electronic signature, required contact information, and required card last-four fields included for credit-card purchases. An automatically generated form reference replaces the receipt / transaction number, and the separate condition and exceptions section has been removed. The suggested PDF file name uses the customer’s name. The time is entered from the device’s clock with a button, and the purchase date is filled in automatically from the device’s date. A hand-entered total price, including tax, replaces the item and quantity list.</p></div>
+</form><div class="sources"><b>Source</b><p>Magic Mouse Memories customer inspection and final-sale acknowledgment supplied for this conversion. Original acknowledgment wording retained; handwritten electronic signature, required contact information, and required card last-four fields included for credit-card purchases. An automatically generated form reference replaces the receipt / transaction number, and the separate condition and exceptions section has been removed. The suggested PDF file name uses the customer’s name. The purchase date, signing date and time fill in automatically from the device’s clock when the page opens and after reset; a button updates the time. A hand-entered total price, including tax, replaces the item and quantity list.</p></div>
 </div>
 <script>
 (()=>{
 'use strict';
+const purchaseEl=document.getElementById('purchase-date'),signedEl=document.getElementById('signed-date'),timeEl=document.getElementById('signed-time');
+function todayText(d){const M=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];return M[d.getMonth()]+' '+d.getDate()+', '+d.getFullYear()}
+function isoDay(d){const p=v=>String(v).padStart(2,'0');return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())}
+function timeText(d){try{return d.toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit',timeZoneName:'short'})}catch(e){return d.toLocaleTimeString()}}
+function stampDates(){const d=new Date(),v=todayText(d);purchaseEl.value=v;purchaseEl.defaultValue=v;signedEl.value=v;signedEl.defaultValue=v;signedEl.setAttribute('data-iso',isoDay(d))}
+function stampTime(){timeEl.value=timeText(new Date())}
+try{stampDates()}catch(e){}try{stampTime()}catch(e){}
+window.addEventListener('pageshow',()=>{try{if(!purchaseEl.value)stampDates();if(!timeEl.value)stampTime()}catch(e){}});
 const canvas=document.getElementById('signature-pad'),ctx=canvas.getContext('2d'),form=document.querySelector('form'),status=document.getElementById('signature-status'),image=document.getElementById('signature-print'),ref=document.getElementById('form-reference'),nameInput=document.getElementById('customer'),dateInput=document.getElementById('signed-date'),timeInput=document.getElementById('signed-time'),timeNote=document.getElementById('time-note'),purchaseInput=document.getElementById('purchase-date');
 const TIME_NOTE=timeNote.textContent;
 const totalInput=document.getElementById('total-price');
@@ -172,11 +181,11 @@ function formatTotal(){const raw=totalInput.value.replace(/[\s$,]/g,'');if(!/^[0
 totalInput.addEventListener('blur',formatTotal);totalInput.addEventListener('change',formatTotal);
 const BASE_TITLE=document.title;
 function newReference(){const A='ABCDEFGHJKMNPQRSTUVWXYZ23456789',n=new Uint8Array(8);let s='';if(window.crypto&&crypto.getRandomValues){crypto.getRandomValues(n)}else{for(let i=0;i<8;i++)n[i]=Math.floor(Math.random()*256)}for(let i=0;i<8;i++){s+=A[n[i]%A.length];if(i===3)s+='-'}const d=new Date(),p=v=>String(v).padStart(2,'0');const v='MMM-'+String(d.getFullYear()).slice(2)+p(d.getMonth()+1)+p(d.getDate())+'-'+s;ref.value=v;ref.defaultValue=v}
-function setPurchaseDate(){const d=new Date(),M=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];const v=M[d.getMonth()]+' '+d.getDate()+', '+d.getFullYear();purchaseInput.value=v;purchaseInput.defaultValue=v}
-function insertTime(){const d=new Date();let t;try{t=d.toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit',timeZoneName:'short'})}catch(e){t=d.toLocaleTimeString()}timeInput.value=t;timeNote.textContent=TIME_NOTE}
+function setPurchaseDate(){stampDates()}
+function insertTime(){stampTime();timeNote.textContent=TIME_NOTE}
 document.getElementById('insert-time').addEventListener('click',insertTime);
 function safeName(v){return String(v||'').normalize('NFC').replace(/[\u0000-\u001f\u007f\\/:*?"<>|]+/g,' ').replace(/\s+/g,' ').replace(/^[\s.]+|[\s.]+$/g,'').slice(0,60).trim()}
-function fileTitle(){const n=safeName(nameInput.value);if(!n)return BASE_TITLE;const d=/^\d{4}-\d{2}-\d{2}$/.test(dateInput.value)?' '+dateInput.value:'';return n+' - inspection'+d}
+function fileTitle(){const n=safeName(nameInput.value);if(!n)return BASE_TITLE;const iso=dateInput.getAttribute('data-iso')||'',d=/^\d{4}-\d{2}-\d{2}$/.test(iso)?' '+iso:'';return n+' - inspection'+d}
 function updateTitle(){document.title=fileTitle()}
 let strokes=[],active=null,pointer=null;
 function render(){
@@ -195,13 +204,13 @@ canvas.addEventListener('pointerup',finish);canvas.addEventListener('pointercanc
 canvas.addEventListener('touchstart',e=>e.preventDefault(),{passive:false});canvas.addEventListener('touchmove',e=>e.preventDefault(),{passive:false});canvas.addEventListener('contextmenu',e=>e.preventDefault());
 function clear(){strokes=[];active=null;pointer=null;status.textContent='Not signed yet.';render()}
 document.getElementById('clear-signature').addEventListener('click',clear);
-form.addEventListener('reset',()=>{clear();timeNote.textContent=TIME_NOTE;document.title=BASE_TITLE;setTimeout(()=>{newReference();setPurchaseDate();document.title=BASE_TITLE},0)});
+form.addEventListener('reset',()=>{clear();timeNote.textContent=TIME_NOTE;document.title=BASE_TITLE;setTimeout(()=>{newReference();setPurchaseDate();stampTime();document.title=BASE_TITLE},0)});
 nameInput.addEventListener('input',updateTitle);dateInput.addEventListener('input',updateTitle);dateInput.addEventListener('change',updateTitle);
-document.getElementById('print-form').addEventListener('click',()=>{formatTotal();if(!form.reportValidity())return;if(!timeInput.value.trim()){timeNote.textContent='Please tap Insert current time before saving.';timeInput.scrollIntoView({block:'center'});return}if(!strokes.length){status.textContent='Please sign in the box before saving.';canvas.scrollIntoView({block:'center'});return}updateTitle();render();window.print()});
+document.getElementById('print-form').addEventListener('click',()=>{formatTotal();if(!form.reportValidity())return;if(!timeInput.value.trim()){timeNote.textContent='Please tap Enter current time before saving.';timeInput.scrollIntoView({block:'center'});return}if(!strokes.length){status.textContent='Please sign in the box before saving.';canvas.scrollIntoView({block:'center'});return}updateTitle();render();window.print()});
 form.addEventListener('submit',e=>e.preventDefault());
 window.addEventListener('beforeprint',()=>{updateTitle();render()});
 if(window.ResizeObserver)new ResizeObserver(render).observe(canvas);else window.addEventListener('resize',render);
-newReference();setPurchaseDate();updateTitle();
+newReference();if(!purchaseEl.value)setPurchaseDate();if(!timeEl.value)stampTime();updateTitle();
 render();
 })();
 </script>
