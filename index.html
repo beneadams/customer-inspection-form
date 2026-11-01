@@ -166,7 +166,7 @@ form.add{position:relative;display:flex;margin:16px 0 0}form.add input{flex:1;mi
 const canvas=document.getElementById('signature-pad'),ctx=canvas.getContext('2d'),form=document.querySelector('form'),status=document.getElementById('signature-status'),image=document.getElementById('signature-print'),ref=document.getElementById('form-reference'),nameInput=document.getElementById('customer'),dateInput=document.getElementById('signed-date'),timeInput=document.getElementById('signed-time'),timeNote=document.getElementById('time-note');
 const TIME_NOTE=timeNote.textContent;
 const BASE_TITLE=document.title;
-function newReference(){let v='';const b=new Uint8Array(1);while(v.length<6){let x;if(window.crypto&&crypto.getRandomValues){crypto.getRandomValues(b);x=b[0]}else{x=Math.floor(Math.random()*250)}if(x<250)v+=String(x%10)}v='MMM-'+v;ref.value=v;ref.defaultValue=v}
+function newReference(){let v='';const b=new Uint8Array(1);while(v.length<6){let x;if(window.crypto&&crypto.getRandomValues){crypto.getRandomValues(b);x=b[0]}else{x=Math.floor(Math.random()*250)}if(x<250)v+=String(x%10)}v='MMM'+v;ref.value=v;ref.defaultValue=v}
 function insertTime(){const d=new Date();let t;try{t=d.toLocaleTimeString(undefined,{hour:'numeric',minute:'2-digit',timeZoneName:'short'})}catch(e){t=d.toLocaleTimeString()}timeInput.value=t;timeNote.textContent=TIME_NOTE}
 document.getElementById('insert-time').addEventListener('click',insertTime);
 function safeName(v){return String(v||'').normalize('NFC').replace(/[\u0000-\u001f\u007f\\/:*?"<>|]+/g,' ').replace(/\s+/g,' ').replace(/^[\s.]+|[\s.]+$/g,'').slice(0,60).trim()}
