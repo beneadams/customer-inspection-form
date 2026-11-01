@@ -129,6 +129,8 @@ form.add{position:relative;display:flex;margin:16px 0 0}form.add input{flex:1;mi
 <h1>Customer inspection and final-sale acknowledgment</h1><p class="kicker">Magic Mouse Memories · Credit-card purchases only</p>
 <p class="lede">For credit-card purchases only: complete the details, provide a phone number or email address, and sign in the box with your pen or finger.</p>
 <div class="instructions"><p class="notice">This is a fillable form, not a hosted submission service. Entries are not sent or stored automatically. Keep this page open until you have retained the completed record, then use the reset button at the bottom for the next customer.</p><p class="notice">Use a regular browser to fill it out. To retain a completed copy, use your browser’s Print command and choose PDF. The suggested file name is the customer’s name and the signing date, but your device may show a different name, so check it before saving. Check that all required entries are complete and visible before sharing. Printing does not automatically enforce required fields. Do not close the page first.</p></div>
+<div class="instructions form-errors" id="update-banner" role="status" hidden><p>A newer version of this form is available.</p><p style="font-weight:400">Finish and save the current customer first: updating clears anything typed in.</p><button type="button" id="update-now">Update now</button></div>
+<p class="notice instructions" id="form-version">Form version: Nov 1, 11:55am (lists missing items in red above the print button)</p>
 <form class="form-fields" autocomplete="off">
 <fieldset><legend>Purchase details</legend>
 <label for="purchase-date">Purchase date<input id="purchase-date" type="text" readonly tabindex="-1" autocomplete="off" aria-describedby="purchase-date-note"></label>
@@ -235,6 +237,18 @@ window.addEventListener('beforeprint',()=>{updateTitle();render()});
 if(window.ResizeObserver)new ResizeObserver(render).observe(canvas);else window.addEventListener('resize',render);
 newReference();if(!purchaseEl.value)setPurchaseDate();if(!timeEl.value)stampTime();updateTitle();
 render();
+})();
+</script>
+<script>
+(()=>{
+const FORM_VERSION='2026-11-01-1155';
+const banner=document.getElementById('update-banner'),base=location.href.split('#')[0].split('?')[0];
+let checking=false;
+function untouched(){const ids=['total-price','customer','contact','card-last-four','seller'];if(ids.some(id=>{const el=document.getElementById(id);return el&&el.value.trim()}))return false;const st=document.getElementById('signature-status');return !st||/Not signed/.test(st.textContent)}
+function go(v){location.replace(base+'?v='+encodeURIComponent(v))}
+function check(){if(checking||!window.fetch)return;checking=true;fetch(base+'?check='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.text():'').then(t=>{const m=/FORM_VERSION='([^']+)'/.exec(t);if(!m||m[1]===FORM_VERSION)return;const key='mmm-form-updated-to-'+m[1];let tried=false;try{tried=sessionStorage.getItem(key)==='1'}catch(e){}if(untouched()&&!tried){try{sessionStorage.setItem(key,'1')}catch(e){}go(m[1]);return}banner.hidden=false;document.getElementById('update-now').onclick=()=>go(m[1])}).catch(()=>{}).finally(()=>{checking=false})}
+window.addEventListener('pageshow',check);
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')check()});
 })();
 </script>
 </body></html>
